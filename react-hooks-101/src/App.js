@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const App = (props) => {
-  // これでもいい
-  // const initialStates = {
-  //   name: '金額',
-  //   price: 1000,
-  // };
-  // const [name, setName] = useState(initialStates.name);
-  // const [name, setName] = useState(initialStates.name);
   const [state, setState] = useState(props);
-  // const [name, setName] = useState(props.name);
-  // const [price, setPrice] = useState(props.price);
+  const { name, price } = state;
+  // レンダリングの後で呼ばれる
+  // Mountedに似てる
+  // updateの際も呼ばれる
+  useEffect(() => {
+    console.log('this is like componentDidMount or updated');
+  });
+  // こっちは一回だけ
+  useEffect(() => {
+    console.log('this is like componentDidMount');
+  }, []);
+  useEffect(() => {
+    console.log('nameが更新された時だけ出る');
+  }, [name]);
   const reset = () => {
-    // setPrice(props.price);
-    // setName(props.name);
     setState(props);
   };
-  const { name, price } = state;
+
   return (
     <>
       <p>
-        現在の{name}は{price}円です
+        現在の{name}は{price}円です.
       </p>
       <button onClick={() => setState({ ...state, price: price + 1 })}>
         +1
